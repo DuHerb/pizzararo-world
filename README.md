@@ -15,12 +15,13 @@ order price.
 
 ##Specifications
 
-| Behavior | Input | Expected Output |
-|:--------:|:-----:|:---------------:|
-|          |       |                 |
-|          |       |                 |
-|          |       |                 |
-|          |       |                 |
+|                              Behavior                              |                     Input                     |                                                                                                    Expected Output                                                                                                    |
+|:------------------------------------------------------------------:|:---------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| User chooses pizza size                                            | Small, Medium, Large or XL                    | Size: Small = $10                                                                                                                                                                                                     |
+| User chooses meats(premium toppings-first topping free)            | Chicken, Artichoke, Sausage                   | Prem.Tops: Chk, Arti, Suas = 2 extras @$2each = $4                                                                                                                                                                    |
+| User chooses veggies(regular toppings- first topping free)         | Mushroom, olive                               | Reg.Tops: Mush, Olv = 1 extra @$1each = $1                                                                                                                                                                            |
+| User can enter address for delivery (no address for pickup option) | Name:... Address... City... Zip... Phone#:... | Deliver To: *Name* *Address* *City* *Zip* *Phone Number*                                                                                                                                                              |
+| After order is complete, final price is totaled.                   | Click "Place Order" button                    | Thanks for ordering from Pizzaro World!  1:med pizza @ $10  Prem.Tops: chk, arti, suas @$2each = $4   Reg.Tops: mush, olv @$1each = $1                               === $15 2...."next pizza"....  Order Total:  $15 |
 
 ## Setup/Installation Requirements
 
