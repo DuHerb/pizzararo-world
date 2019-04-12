@@ -6,3 +6,7 @@
 .hidden {
   visibility: hidden;
 }
+
+.modal {
+  background-color: orange;
+}
