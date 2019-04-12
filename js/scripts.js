@@ -30,20 +30,19 @@ function Pizza(){
   this.pizzaTotal = 0
 }
 
-//getPizzaTotal() sets each pizza object price according to topping and size modifiers
-Pizza.prototype.getPizzaTotal = function(){
+//getPizzaTotal() sets each pizza object price according size and
+//topping modifiers passed by a Modifier() object
+Pizza.prototype.getPizzaTotal = function(modifiers){
   var total = 0;
   var size = this.size;
+
   this.toppings.forEach(function(topping){
-    if(premiumToppings.includes(topping)){
-      total += 2;
-    }
-    if(meats.includes(topping)){
-      total += 2;
-    }
-    if(regularToppings.includes(topping)){
-      total += 1;
-    }
+    modifiers.modTypes.forEach(function(modType){
+      var modPrice = modType.modPrice;
+      if(modType.mods.includes(topping)){
+        total += modPrice;
+      }
+    })
   })
   if(size === "small"){
     total += 8;
@@ -57,32 +56,37 @@ Pizza.prototype.getPizzaTotal = function(){
   this.pizzaTotal = total;
 }
 
-var meats = ["pepperoni", "chicken", "suasage", "anchovey", "bacon"];
-var premiumToppings = ["artichoke","truffles","hot-peppers"];
-var regularToppings = ["olives","mushrooms","garlic","extra-cheese"];
-var pizza1 = new Pizza();
-var pizza2 = new Pizza();
-var pizza3 = new Pizza();
-var testToppings1 = ["bacon", "extra-cheese", "garlic"];
-var testToppings2 = ["chicken", "artichoke","truffles","mushrooms"];
-var testToppings3 = ["hot-peppers", "anchovey", "olives"];
+// Modifiers and ModType objects and methods ---------------------//
+function Modifiers() {
+  this.modTypes = [];
+}
 
-// var userSize = [];
-// var userPremiumToppings = [];
-// var userRegularToppings = [];
-// var userMeats = [];
-//
-// pizza1.toppings = testToppings1;
-// pizza2.toppings = testToppings2;
-// pizza3.toppings = testToppings3;
-// pizza1.getPizzaTotal();
-// pizza2.getPizzaTotal();
-// pizza3.getPizzaTotal();
-//
-// console.log(pizza1);
-// console.log(pizza2);
-// console.log(pizza3);
+function ModType(name, modPrice) {
+  this.name = name,
+  this.modPrice = modPrice,
+  this.mods = []
+}
 
+Modifiers.prototype.addModtype = function(modType){
+  this.modTypes.push(modType);
+}
+
+//enter in different topping options here!!!
+// Meats
+var meats = new ModType("meats", 2);
+meats.mods = ["pepperoni", "chicken", "suasage", "anchovey", "bacon"];
+//Premium Priced Toppings
+var premTops = new ModType("premiumToppings", 2);
+premTops.mods = ["artichoke","truffles","hot-peppers"];
+//Regular Priced Toppings
+var regTops = new ModType("regularToppings", 1);
+regTops.mods = ["olives","mushrooms","garlic","extra-cheese"];
+
+//Initiate Modifiers and Order -----------------------//
+var modifiers = new Modifiers();
+modifiers.addModtype(premTops);
+modifiers.addModtype(regTops);
+modifiers.addModtype(meats);
 var order = new Order();
 
 // click events -------------------------------------//
@@ -95,7 +99,7 @@ function attachEventListeners() {
     $.each($("input[type=checkbox]:checked"), function() {
       pizza.toppings.push($(this).val());
     });
-    pizza.getPizzaTotal();
+    pizza.getPizzaTotal(modifiers);
     userPizza = pizza;
   });
   //orderConfirm pushes new pizza object into the orderObject.
@@ -104,9 +108,7 @@ function attachEventListeners() {
     order.getOrderTotal();
     console.log(order);
   })
-
 }
-
 
 // document.ready  ----------------------------------------//
 $(document).ready(function(){
