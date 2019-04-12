@@ -13,7 +13,8 @@ utilizes these concepts to allow a user to order custom pizzas.  The page will t
 user from the input to build an order, take a delivery address, and return a total
 order price.
 
-##Specifications
+## Specifications
+
 
 |                              Behavior                              |                     Input                     |                                                                                                    Expected Output                                                                                                    |
 |:------------------------------------------------------------------:|:---------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
@@ -26,6 +27,7 @@ order price.
 
 ## Github Pages Link
 <a href="https://duherb.github.io/pizzaro-world">Pizzaro World</a>
+
 ## Setup/Installation Requirements
 
 1.  clone this repo into a local directory
