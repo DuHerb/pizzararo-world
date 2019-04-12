@@ -33,7 +33,7 @@ Pizza.prototype.getPizzaTotal = function(){
   this.pizzaTotal = price;
 }
 
-var meats = ["pepperoni", "chicken", "suasgae", "anchovey", "bacon"];
+var meats = ["pepperoni", "chicken", "suasage", "anchovey", "bacon"];
 var premiumToppings = ["artichoke","truffles","hot-peppers"];
 var regularToppings = ["olives","mushrooms","garlic","extra-cheese"];
 var pizza1 = new Pizza();
@@ -42,6 +42,11 @@ var pizza3 = new Pizza();
 var testToppings1 = ["bacon", "extra-cheese", "garlic"];
 var testToppings2 = ["chicken", "artichoke","truffles","mushrooms"];
 var testToppings3 = ["hot-peppers", "anchovey", "olives"];
+
+var userSize = [];
+var userPremiumToppings = [];
+var userRegularToppings = [];
+var userMeats = [];
 
 pizza1.toppings = testToppings1;
 pizza2.toppings = testToppings2;
@@ -55,13 +60,33 @@ console.log(pizza2);
 console.log(pizza3);
 
 var order = new Order();
-order.addPizza(pizza1);
-order.addPizza(pizza2);
-order.addPizza(pizza3);
-console.log(order);
+// order.addPizza(pizza1);
+// order.addPizza(pizza2);
+// order.addPizza(pizza3);
+// console.log(order);
+
+function attachEventListeners() {
+  var userPizza;
+  //orderPreview inserts data into new pizza object -- TODO: trigger preview window
+  $("#orderPreview").on("click", function(event){
+    var pizza = new Pizza();
+    pizza.size = $("input[name='pizzaSize']:checked").val();
+    $.each($("input[type=checkbox]:checked"), function() {
+      pizza.toppings.push($(this).val());
+    });
+    pizza.getPizzaTotal();
+    userPizza = pizza;
+  });
+  //orderConfirm pushes new pizza object into the orderObject.
+  $("#orderConfirm").on("click", function(event){
+    order.addPizza(userPizza);
+    console.log(order);
+  })
+
+}
 
 
 // document.ready  ----------------------------------------//
 $(document).ready(function(){
-
+  attachEventListeners();
 })
