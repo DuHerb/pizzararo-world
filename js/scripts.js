@@ -125,12 +125,15 @@ function attachEventListeners() {
     pizza.getPizzaTotal(modifiers);
     userPizza = pizza;
     pizza.previewDisplay(db);
+    // $("#modalPreviewPizza").modal('show');
   });
   //orderConfirm pushes new pizza object into the orderObject.
-  $("#orderConfirm").on("click", function(event){
+  $("#pizzaConfirm").on("click", function(event){
+    console.log("clicked");
     order.addPizza(userPizza);
     order.getOrderTotal();
     console.log(order);
+
   })
 }
 
