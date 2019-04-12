@@ -17,6 +17,14 @@ Order.prototype.addPizza = function (pizza){
   this.pizzas.push(pizza);
 };
 
+Order.prototype.getOrderTotal = function() {
+  var total = 0;
+  this.pizzas.forEach(function(pizza){
+    total += pizza.pizzaTotal;
+  });
+  this.orderTotal = total;
+};
+
 Pizza.prototype.getPizzaTotal = function(){
   var price = 0;
   this.toppings.forEach(function(topping){
@@ -60,10 +68,7 @@ console.log(pizza2);
 console.log(pizza3);
 
 var order = new Order();
-// order.addPizza(pizza1);
-// order.addPizza(pizza2);
-// order.addPizza(pizza3);
-// console.log(order);
+
 
 function attachEventListeners() {
   var userPizza;
@@ -80,6 +85,7 @@ function attachEventListeners() {
   //orderConfirm pushes new pizza object into the orderObject.
   $("#orderConfirm").on("click", function(event){
     order.addPizza(userPizza);
+    order.getOrderTotal();
     console.log(order);
   })
 
