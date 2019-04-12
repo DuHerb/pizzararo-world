@@ -23,6 +23,9 @@ order price.
 | User can enter address for delivery (no address for pickup option) | Name:... Address... City... Zip... Phone#:... | Deliver To: *Name* *Address* *City* *Zip* *Phone Number*                                                                                                                                                              |
 | After order is complete, final price is totaled.                   | Click "Place Order" button                    | Thanks for ordering from Pizzaro World!  1:med pizza @ $10  Prem.Tops: chk, arti, suas @$2each = $4   Reg.Tops: mush, olv @$1each = $1                               === $15 2...."next pizza"....  Order Total:  $15 |
 
+
+## Github Pages Link
+<a href="https://duherb.github.io/pizzaro-world">Pizzaro World</a>
 ## Setup/Installation Requirements
 
 1.  clone this repo into a local directory
