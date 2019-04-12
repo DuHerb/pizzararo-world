@@ -89,6 +89,29 @@ modifiers.addModtype(regTops);
 modifiers.addModtype(meats);
 var order = new Order();
 
+//Display Builder and Display methods -----------------//
+function DisplayBuilder() {
+  this.p = "<p>",
+  this.cp = "</p>"
+  this.ul = "<ul>",
+  this.cul = "</u>",
+  this.li = "<li>",
+  this.cli = "</li>"
+}
+var db = new DisplayBuilder();
+
+Pizza.prototype.previewDisplay = function (db) {
+  var size = db.p + "Size: " +  this.size + db.cp;
+  var toppingsCount = db.p + this.toppings.length + " Toppings:" + db.cp;
+  var toppingsText =  "";
+  var total = db.p + "Pizza Total: $" +  this.pizzaTotal + db.cp;
+  this.toppings.forEach(function(topping){
+    toppingsText += db.li + topping + db.cli;
+  });
+  $("#modalPreviewDisplay").empty();
+  $("#modalPreviewDisplay").append(size, toppingsCount, db.ul+toppingsText+db.cul, total);
+};
+
 // click events -------------------------------------//
 function attachEventListeners() {
   var userPizza;
@@ -101,6 +124,7 @@ function attachEventListeners() {
     });
     pizza.getPizzaTotal(modifiers);
     userPizza = pizza;
+    pizza.previewDisplay(db);
   });
   //orderConfirm pushes new pizza object into the orderObject.
   $("#orderConfirm").on("click", function(event){
