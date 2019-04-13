@@ -89,7 +89,8 @@ modifiers.addModtype(regTops);
 modifiers.addModtype(meats);
 var order = new Order();
 
-//Display Builder and Display methods -----------------//
+//Display Builder Object and Display methods -----------------//
+//DisplayBuilder assists in creating output strings for display methods
 function DisplayBuilder() {
   this.p = "<p>",
   this.cp = "</p>"
@@ -113,10 +114,13 @@ Pizza.prototype.previewPizza = function (db) {
 
 Order.prototype.previewOrder = function () {
   let db = new DisplayBuilder();
+  let grandTotal = db.p + "Grand Total: $" + this.orderTotal + db.cp;
   $("#modalPreviewDisplay").empty();
   this.pizzas.forEach(function(pizza){
+    this.orderTotal += pizza.pizzaTotal;
     pizza.previewPizza(db)
   })
+  $("#modalPreviewDisplay").append(grandTotal);
 };
 var goodBye = "Enjoyo Your Pizzaro!"
 
@@ -139,7 +143,7 @@ function attachEventListeners() {
   //orderConfirm pushes new pizza object into the orderObject.
   $("#pizzaConfirmAdd").on("click", function(event){
     order.addPizza(userPizza);
-    order.getOrderTotal();
+
     console.log(order);
     $("#modalPreviewPizza").on("hidden.bs.modal",function(e){
       $("#multiplePizzas").removeClass('hidden');
@@ -148,8 +152,9 @@ function attachEventListeners() {
 
   //orderPreview Shows user entire order before submitting NOT WORKING
   $("#orderPreview").on("click", function(event){
-    console.log(clicked);
     $("#modalPreviewDisplay").empty();
+    order.addPizza(userPizza);
+    order.getOrderTotal();
     order.previewOrder();
   });
 }
