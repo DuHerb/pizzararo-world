@@ -83,7 +83,7 @@
         <input type="number" name="phone" placeholder="Phone Number">
       </div> -->
 
-      <button id="orderPreview" class="btn btn-warning" type="button" name="button" data-toggle="modal" data-target="#modalPreviewPizza" data-backdrop=false data-keyboard=false>Preview Order</button>
+      <button id="pizzaPreview" class="btn btn-warning" type="button" name="button" data-toggle="modal" data-target="#modalPreviewPizza" data-backdrop=false data-keyboard=false>Preview Order</button>
     </form>
 
     <!-- Preview Pizza Modal -->
@@ -92,17 +92,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Your Pizzaro So Faro:</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
-          <div id="modalPreviewDisplay" class="modal-body">
-
-          </div>
+          <div id="modalPreviewDisplay" class="modal-body"></div>
           <div class="modal-footer">
             <h5>Does this look right?</h5>
             <button type="button" class="btn btn-danger" data-dismiss="modal">No. I messed it all up</button>
-            <button id="pizzaConfirm" type="button" class="btn btn-warning" data-dismiss="modal">Yes...but I want another pizza</button>
+            <button id="pizzaConfirmAdd" type="button" class="btn btn-warning" data-dismiss="modal">Yes...but I want another pizza</button>
             <button type="button" class="btn btn-success">Yes. Order my pizza<span id="multiplePizzas" class="hidden">s</span></button>
           </div>
         </div>
@@ -126,7 +121,7 @@
             <h5>Does this look right?</h5>
             <button type="button" class="btn btn-danger" data-dismiss="modal">No. It's all wrong</button>
             <button id="pizzaConfirm" type="button" class="btn btn-warning">Yes...but I want another pizza</button>
-            <button type="button" class="btn btn-success">Yes. Order my pizza<span id="multiplePizzas" class="hidden">s</span></button>
+            <button id="orderPreview" type="button" class="btn btn-success">Yes. Order my pizza<span id="multiplePizzas" class="hidden">s</span></button>
           </div>
         </div>
       </div>
