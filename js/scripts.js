@@ -146,7 +146,7 @@ function attachEventListeners() {
     })
   });
 
-  //orderPreview Shows user entire order before submitting
+  //orderPreview Shows user entire order before submitting NOT WORKING
   $("#orderPreview").on("click", function(event){
     console.log(clicked);
     $("#modalPreviewDisplay").empty();
