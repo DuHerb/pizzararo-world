@@ -61,8 +61,9 @@ function Modifiers() {
   this.modTypes = [];
 }
 
-function ModType(name, modPrice) {
+function ModType(name, inputName, modPrice) {
   this.name = name,
+  this.inputName = inputName,
   this.modPrice = modPrice,
   this.mods = []
 }
@@ -73,20 +74,20 @@ Modifiers.prototype.addModtype = function(modType){
 
 //enter in different topping options here!!!
 // Meats
-var meats = new ModType("meats", 2);
+var meats = new ModType("Meats:", "meats", 2);
 meats.mods = ["pepperoni", "chicken", "suasage", "anchovey", "bacon"];
 //Premium Priced Toppings
-var premTops = new ModType("premiumToppings", 2);
+var premTops = new ModType("Premium Toppings:", "premiumToppings", 2);
 premTops.mods = ["artichoke","truffles","hot-peppers"];
 //Regular Priced Toppings
-var regTops = new ModType("regularToppings", 1);
+var regTops = new ModType("Regular Toppings:", "regularToppings", 1);
 regTops.mods = ["olives","mushrooms","garlic","extra-cheese"];
 
 //Initiate Modifiers and Order -----------------------//
 var modifiers = new Modifiers();
+modifiers.addModtype(meats);
 modifiers.addModtype(premTops);
 modifiers.addModtype(regTops);
-modifiers.addModtype(meats);
 var order = new Order();
 
 //Display Builder Object and Display methods -----------------//
@@ -97,7 +98,11 @@ function DisplayBuilder() {
   this.ul = "<ul>",
   this.cul = "</u>",
   this.li = "<li>",
-  this.cli = "</li>"
+  this.cli = "</li>",
+  this.div = "<div>",
+  this.cdiv = "</div>",
+  this.h3 = "<h3>",
+  this.ch3 = "</h3>"
 }
 var db = new DisplayBuilder();
 
@@ -122,7 +127,24 @@ Order.prototype.previewOrder = function () {
   })
   $("#modalPreviewDisplay").append(grandTotal);
 };
+
+//buildToppingsList() creates the html tags and content for the modifier arrays
+Modifiers.prototype.buildToppingsList = function () {
+
+  this.modTypes.forEach(function(modType){
+    let html = "<h3 class='from-heading'>" + modType.name + " ($" + modType.modPrice + " each)</h3>" + db.div + db.cdiv;
+    $("form div").addClass('form-group');
+    $("form").append(html);
+    modType.mods.forEach(function(mod){
+      let name = modType.inputName;
+      let modHtml = "<input type='checkbox' name='" + name + "' value='" + mod + "'>";
+      $("form div").append(modHtml);
+    })
+  })
+};
+
 var goodBye = "Enjoyo Your Pizzaro!"
+
 
 // click events -------------------------------------//
 function attachEventListeners() {
@@ -162,4 +184,6 @@ function attachEventListeners() {
 // document.ready  ----------------------------------------//
 $(document).ready(function(){
   attachEventListeners();
+  modifiers.buildToppingsList();
+
 })
