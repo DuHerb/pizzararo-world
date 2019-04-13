@@ -100,7 +100,7 @@ function DisplayBuilder() {
 }
 var db = new DisplayBuilder();
 
-Pizza.prototype.previewDisplay = function (db) {
+Pizza.prototype.previewPizza = function (db) {
   var size = db.p + "Size: " +  this.size + db.cp;
   var toppingsCount = db.p + this.toppings.length + " Toppings:" + db.cp;
   var toppingsText =  "";
@@ -108,15 +108,23 @@ Pizza.prototype.previewDisplay = function (db) {
   this.toppings.forEach(function(topping){
     toppingsText += db.li + topping + db.cli;
   });
-  $("#modalPreviewDisplay").empty();
   $("#modalPreviewDisplay").append(size, toppingsCount, db.ul+toppingsText+db.cul, total);
 };
+
+Order.prototype.previewOrder = function () {
+  let db = new DisplayBuilder();
+  $("#modalPreviewDisplay").empty();
+  this.pizzas.forEach(function(pizza){
+    pizza.previewPizza(db)
+  })
+};
+var goodBye = "Enjoyo Your Pizzaro!"
 
 // click events -------------------------------------//
 function attachEventListeners() {
   var userPizza;
   //orderPreview inserts data into new pizza object -- TODO: trigger preview window
-  $("#orderPreview").on("click", function(event){
+  $("#pizzaPreview").on("click", function(event){
     var pizza = new Pizza();
     pizza.size = $("input[name='pizzaSize']:checked").val();
     $.each($("input[type=checkbox]:checked"), function() {
@@ -124,17 +132,26 @@ function attachEventListeners() {
     });
     pizza.getPizzaTotal(modifiers);
     userPizza = pizza;
-    pizza.previewDisplay(db);
+    $("#modalPreviewDisplay").empty();
+    pizza.previewPizza(db);
     // $("#modalPreviewPizza").modal('show');
   });
   //orderConfirm pushes new pizza object into the orderObject.
-  $("#pizzaConfirm").on("click", function(event){
-    console.log("clicked");
+  $("#pizzaConfirmAdd").on("click", function(event){
     order.addPizza(userPizza);
     order.getOrderTotal();
     console.log(order);
+    $("#modalPreviewPizza").on("hidden.bs.modal",function(e){
+      $("#multiplePizzas").removeClass('hidden');
+    })
+  });
 
-  })
+  //orderPreview Shows user entire order before submitting
+  $("#orderPreview").on("click", function(event){
+    console.log(clicked);
+    $("#modalPreviewDisplay").empty();
+    order.previewOrder();
+  });
 }
 
 // document.ready  ----------------------------------------//
