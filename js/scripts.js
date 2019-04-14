@@ -128,6 +128,10 @@ Order.prototype.previewOrder = function () {
   $("#modalPreviewDisplay").append(grandTotal);
 };
 
+function clearForm() {
+  // $("form").trigger('reset');
+  $("form").trigger('reset');
+}
 //buildToppingsList() creates the html tags and content for the modifier arrays
 Modifiers.prototype.buildToppingsList = function () {
 
@@ -153,9 +157,11 @@ function attachEventListeners() {
   $("#pizzaPreview").on("click", function(event){
     var pizza = new Pizza();
     pizza.size = $("input[name='pizzaSize']:checked").val();
+
     $.each($("input[type=checkbox]:checked"), function() {
       pizza.toppings.push($(this).val());
     });
+
     pizza.getPizzaTotal(modifiers);
     userPizza = pizza;
     $("#modalPreviewDisplay").empty();
@@ -170,6 +176,7 @@ function attachEventListeners() {
     $("#modalPreviewPizza").on("hidden.bs.modal",function(e){
       $("#multiplePizzas").removeClass('hidden');
     })
+    clearForm();
   });
 
   //orderPreview Shows user entire order before submitting NOT WORKING
@@ -179,11 +186,16 @@ function attachEventListeners() {
     order.getOrderTotal();
     order.previewOrder();
   });
+
+  //goBack button returns user to order form without adding pizza to order
+  $("#goBack").on("click", function(){
+    clearForm();
+  })
 }
 
 // document.ready  ----------------------------------------//
 $(document).ready(function(){
   attachEventListeners();
-  modifiers.buildToppingsList();
+  // modifiers.buildToppingsList();
 
 })
