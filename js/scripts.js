@@ -16,6 +16,7 @@ Order.prototype.addPizza = function (pizza){
 //getOrderTotal() sets the orderTotal to the total price of all pizzas in order
 Order.prototype.getOrderTotal = function() {
   var total = 0;
+
   this.pizzas.forEach(function(pizza){
     total += pizza.pizzaTotal;
   });
@@ -50,7 +51,7 @@ Pizza.prototype.getPizzaTotal = function(modifiers){
     total += 10;
   } else if (size === "large") {
     total += 12;
-  } else if (size === "xlarge"){
+  } else if (size === "extra-large"){
     total += 14;
   }
   this.pizzaTotal = total;
@@ -108,11 +109,11 @@ var db = new DisplayBuilder();
 
 //previewPizza() displays the users order for single Pizza before user confirmation
 Pizza.prototype.previewPizza = function (db) {
-
   var size = db.p + "Size: " +  this.size + db.cp;
   var toppingsCount = db.p + this.toppings.length + " Toppings:" + db.cp;
   var toppingsText =  "";
-  var total = db.p + "Total: $" +  this.pizzaTotal + db.cp;
+  var total = db.p + "Price: $" +  this.pizzaTotal + db.cp;
+
   this.toppings.forEach(function(topping){
     toppingsText += db.li + topping + db.cli;
   })
@@ -135,15 +136,11 @@ Order.prototype.previewOrder = function () {
   $("#modalDisplay").append(grandTotal);
 };
 
-function clearForm() {
-  // $("form").trigger('reset');
-  $("form").trigger('reset');
-}
 //buildToppingsList() creates the html tags and content for the modifier arrays
 Modifiers.prototype.buildToppingsList = function () {
-
   this.modTypes.forEach(function(modType){
     var html = "<h3 class='from-heading'>" + modType.name + " ($" + modType.modPrice + " each)</h3>" + db.div + db.cdiv;
+
     $("form div").addClass('form-group');
     $("form").append(html);
     modType.mods.forEach(function(mod){
@@ -156,46 +153,63 @@ Modifiers.prototype.buildToppingsList = function () {
 
 var goodBye = "Enjoyo Your Pizzaro!"
 
+// Helper Functions ---------------------------------//
+function clearForm() {
+  // $("form").trigger('reset');
+  $("form").trigger('reset');
+}
 
 // click events -------------------------------------//
 function attachEventListeners() {
   var userPizza;
-  //orderPreview inserts data into new pizza object -- TODO: trigger preview window
+  //previewPizza inserts data into new pizza object -- TODO: trigger preview window
   $("#previewPizza").on("click", function(event){
     var pizza = new Pizza();
-    pizza.size = $("input[name='pizzaSize']:checked").val();
 
+    pizza.size = $("input[name='pizzaSize']:checked").val();
     $.each($("input[type=checkbox]:checked"), function() {
       pizza.toppings.push($(this).val());
     });
-
     pizza.getPizzaTotal(modifiers);
     userPizza = pizza;
     $("#modalDisplay").empty();
     pizza.previewPizza(db);
-    // $("#modalPreviewPizza").modal('show');
   });
-  //orderConfirm pushes new pizza object into the orderObject.
+
+  //addPizza pushes new pizza object into the orderObject.
   $("#addPizza").on("click", function(event){
     order.addPizza(userPizza);
     $("#modalPreviewPizza").on("hidden.bs.modal",function(e){
       $("#addS").removeClass('hidden');
     })
     clearForm();
-  });
+    $("#previewOrder").removeClass('hidden');
+    $("#confirmOrder").addClass('hidden');
+  })
 
-  //orderPreview Shows user entire order before submitting NOT WORKING
+  //previewOrder shows user entire order before submitting
   $("#previewOrder").on("click", function(event){
     $("#modalDisplay").empty();
     order.addPizza(userPizza);
     order.getOrderTotal();
     order.previewOrder();
-  });
+    $("#previewOrder").addClass('hidden');
+    $("#confirmOrder").removeClass('hidden');
+  })
 
   //goBack button returns user to order form without adding pizza to order
   $("#goBack").on("click", function(){
     clearForm();
+    $("#previewOrder").removeClass('hidden');
+    $("#confirmOrder").addClass('hidden');
   })
+
+  //confirmOrder will eomplete order process. For test purposes, it will refresh the page.
+  $("#confirmOrder").on("click", function(){
+    window.location.reload();
+    console.log("confirmOrder clicked");
+  })
+
 }
 
 // document.ready  ----------------------------------------//

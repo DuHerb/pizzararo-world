@@ -2,11 +2,19 @@
   margin: 30px;
 }
 
+#confirmOrder {
+
+}
+
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .modal {
   background-color: orange;
+}
+
+ul {
+  list-style-image: url("../img/pizzaBullet.png");
 }

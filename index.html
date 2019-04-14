@@ -14,13 +14,13 @@
     <form>
       <h3 class="from-heading">Size:</h3>
       <div class="sizes form-group">
-        <input type="radio" name="pizzaSize" value="small">
+        <input type="radio" name="pizzaSize" value="small" checked="checked">
         <label for="pizzaSize">Small - $8</label>
         <input type="radio" name="pizzaSize" value="medium">
         <label for="pizzaSize">Medium - $10</label>
         <input type="radio" name="pizzaSize" value="large">
         <label for="pizzaSize">Large - $12</label>
-        <input type="radio" name="pizzaSize" value="xlarge">
+        <input type="radio" name="pizzaSize" value="extra-large">
         <label for="pizzaSize">X-Large - $14</label>
       </div><!-- /.sizes -->
 
@@ -101,7 +101,7 @@
             <button id="goBack" type="button" class="btn btn-danger" data-dismiss="modal">No. I messed it all up</button>
             <button id="addPizza" type="button" class="btn btn-warning" data-dismiss="modal">Yes...but I want another pizza</button>
             <button id="previewOrder" type="button" class="btn btn-success">Yes. Ready to Checkout</button>
-            <button id="confirmOrder" type="button" class="btn btn-success">Yes. Order my Pizza<span id="addS" class="hidden">s</span></button>
+            <button id="confirmOrder" type="button" class="btn btn-success hidden">Yes. Order my pizza<span id="addS" class="hidden">s</span></button>
           </div>
         </div>
       </div>
