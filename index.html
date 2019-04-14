@@ -85,7 +85,7 @@
         <input type="number" name="phone" placeholder="Phone Number">
       </div> -->
 
-    <button id="pizzaPreview" class="btn btn-warning" type="button" name="button" data-toggle="modal" data-target="#modalPreviewPizza" data-backdrop=false data-keyboard=false>Preview Order</button>
+    <button id="previewPizza" class="btn btn-warning" type="button" name="button" data-toggle="modal" data-target="#modalPreviewPizza" data-backdrop=false data-keyboard=false>Preview Order</button>
     </form>
 
     <!-- Preview Pizza Modal -->
@@ -95,12 +95,13 @@
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Your Pizzaro So Faro:</h5>
           </div>
-          <div id="modalPreviewDisplay" class="modal-body"></div>
+          <div id="modalDisplay" class="modal-body"></div>
           <div class="modal-footer">
             <h5>Does this look right?</h5>
             <button id="goBack" type="button" class="btn btn-danger" data-dismiss="modal">No. I messed it all up</button>
-            <button id="pizzaConfirmAdd" type="button" class="btn btn-warning" data-dismiss="modal">Yes...but I want another pizza</button>
-            <button id="orderPreview" type="button" class="btn btn-success">Yes. Order my pizza<span id="multiplePizzas" class="hidden">s</span></button>
+            <button id="addPizza" type="button" class="btn btn-warning" data-dismiss="modal">Yes...but I want another pizza</button>
+            <button id="previewOrder" type="button" class="btn btn-success">Yes. Ready to Checkout</button>
+            <button id="confirmOrder" type="button" class="btn btn-success">Yes. Order my Pizza<span id="addS" class="hidden">s</span></button>
           </div>
         </div>
       </div>

@@ -106,26 +106,33 @@ function DisplayBuilder() {
 }
 var db = new DisplayBuilder();
 
+//previewPizza() displays the users order for single Pizza before user confirmation
 Pizza.prototype.previewPizza = function (db) {
+
   var size = db.p + "Size: " +  this.size + db.cp;
   var toppingsCount = db.p + this.toppings.length + " Toppings:" + db.cp;
   var toppingsText =  "";
-  var total = db.p + "Pizza Total: $" +  this.pizzaTotal + db.cp;
+  var total = db.p + "Total: $" +  this.pizzaTotal + db.cp;
   this.toppings.forEach(function(topping){
     toppingsText += db.li + topping + db.cli;
-  });
-  $("#modalPreviewDisplay").append(size, toppingsCount, db.ul+toppingsText+db.cul, total);
+  })
+  $("#modalDisplay").append(size, toppingsCount, db.ul+toppingsText+db.cul, total);
 };
 
+//previewOrder displays user's complete order before confirmation
 Order.prototype.previewOrder = function () {
-  let db = new DisplayBuilder();
-  let grandTotal = db.p + "Grand Total: $" + this.orderTotal + db.cp;
-  $("#modalPreviewDisplay").empty();
+  var db = new DisplayBuilder();
+  var grandTotal = db.p + "Grand Total: $" + this.orderTotal + db.cp;
+
+  $("#modalDisplay").empty();
   this.pizzas.forEach(function(pizza){
+    var pizzaCount = db.p + "Pizza #" +  (pizza.pizzaId + 1) + ":" + db.cp;
     this.orderTotal += pizza.pizzaTotal;
-    pizza.previewPizza(db)
+    $("#modalDisplay").append(pizzaCount);
+    pizza.previewPizza(db);
+    $("#modalDisplay").append("---------------------");
   })
-  $("#modalPreviewDisplay").append(grandTotal);
+  $("#modalDisplay").append(grandTotal);
 };
 
 function clearForm() {
@@ -136,12 +143,12 @@ function clearForm() {
 Modifiers.prototype.buildToppingsList = function () {
 
   this.modTypes.forEach(function(modType){
-    let html = "<h3 class='from-heading'>" + modType.name + " ($" + modType.modPrice + " each)</h3>" + db.div + db.cdiv;
+    var html = "<h3 class='from-heading'>" + modType.name + " ($" + modType.modPrice + " each)</h3>" + db.div + db.cdiv;
     $("form div").addClass('form-group');
     $("form").append(html);
     modType.mods.forEach(function(mod){
-      let name = modType.inputName;
-      let modHtml = "<input type='checkbox' name='" + name + "' value='" + mod + "'>";
+      var name = modType.inputName;
+      var modHtml = "<input type='checkbox' name='" + name + "' value='" + mod + "'>";
       $("form div").append(modHtml);
     })
   })
@@ -154,7 +161,7 @@ var goodBye = "Enjoyo Your Pizzaro!"
 function attachEventListeners() {
   var userPizza;
   //orderPreview inserts data into new pizza object -- TODO: trigger preview window
-  $("#pizzaPreview").on("click", function(event){
+  $("#previewPizza").on("click", function(event){
     var pizza = new Pizza();
     pizza.size = $("input[name='pizzaSize']:checked").val();
 
@@ -164,24 +171,22 @@ function attachEventListeners() {
 
     pizza.getPizzaTotal(modifiers);
     userPizza = pizza;
-    $("#modalPreviewDisplay").empty();
+    $("#modalDisplay").empty();
     pizza.previewPizza(db);
     // $("#modalPreviewPizza").modal('show');
   });
   //orderConfirm pushes new pizza object into the orderObject.
-  $("#pizzaConfirmAdd").on("click", function(event){
+  $("#addPizza").on("click", function(event){
     order.addPizza(userPizza);
-
-    console.log(order);
     $("#modalPreviewPizza").on("hidden.bs.modal",function(e){
-      $("#multiplePizzas").removeClass('hidden');
+      $("#addS").removeClass('hidden');
     })
     clearForm();
   });
 
   //orderPreview Shows user entire order before submitting NOT WORKING
-  $("#orderPreview").on("click", function(event){
-    $("#modalPreviewDisplay").empty();
+  $("#previewOrder").on("click", function(event){
+    $("#modalDisplay").empty();
     order.addPizza(userPizza);
     order.getOrderTotal();
     order.previewOrder();
