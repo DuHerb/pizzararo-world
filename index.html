@@ -24,7 +24,7 @@
         <label for="pizzaSize">X-Large - $14</label>
       </div><!-- /.sizes -->
 
-      <!-- <h3 class="from-heading">Meats: ($2 each)</h3>
+      <h3 class="from-heading">Meats: ($2 each)</h3>
       <div class="meats form-group">
         <input type="checkbox" name="meats" value="pepperoni">
         <label for="pepperoni">Pepperoni</label>
@@ -40,10 +40,9 @@
 
         <input type="checkbox" name="meats" value="bacon">
         <label for="bacon">Bacon</label>
-      </div> -->
-      <!-- /.meats -->
+      </div><!-- /.meats -->
 
-      <!-- <h3 class="from-heading">Premium Toppings: ($2 each)</h3>
+      <h3 class="from-heading">Premium Toppings: ($2 each)</h3>
       <div class="premiumToppings form-group">
         <input type="checkbox" name="premiumToppings" value="artichoke">
         <label for="artichoke">Artichoke</label>
@@ -53,10 +52,10 @@
 
         <input type="checkbox" name="premiumToppings" value="hot-peppers">
         <label for="hot-peppers">Hot-peppers</label>
-      </div> -->
+      </div>
       <!-- /.premiumToppings -->
 
-      <!-- <h3 class="from-heading">Regular Toppings: ($1 each)</h3>
+      <h3 class="from-heading">Regular Toppings: ($1 each)</h3>
       <div class="regularToppings form-group">
         <input type="checkbox" name="regularToppings" value="olives">
         <label for="olives">Olives</label>
@@ -69,7 +68,7 @@
 
         <input type="checkbox" name="regularToppings" value="extra-cheese">
         <label for="extra-cheese">Extra-Cheese</label>
-      </div> -->
+      </div>
       <!-- /.regularToppings -->
 
       <!--  Delivery Section  - TODO: functionality, form submit -->
@@ -99,37 +98,13 @@
           <div id="modalPreviewDisplay" class="modal-body"></div>
           <div class="modal-footer">
             <h5>Does this look right?</h5>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">No. I messed it all up</button>
+            <button id="goBack" type="button" class="btn btn-danger" data-dismiss="modal">No. I messed it all up</button>
             <button id="pizzaConfirmAdd" type="button" class="btn btn-warning" data-dismiss="modal">Yes...but I want another pizza</button>
             <button id="orderPreview" type="button" class="btn btn-success">Yes. Order my pizza<span id="multiplePizzas" class="hidden">s</span></button>
           </div>
         </div>
       </div>
     </div><!-- /#modalPreviewPizza -->
-
-    <!-- Review Order Modal -->
-    <!-- <div id="modalReviewOrder" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Your Pizza So Far:</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div id="modalPreviewDisplay" class="modal-body">
-
-          </div>
-          <div class="modal-footer">
-            <h5>Does this look right?</h5>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">No. It's all wrong</button>
-            <button id="pizzaConfirm" type="button" class="btn btn-warning">Yes...but I want another pizza</button>
-            <button id="orderPreview" type="button" class="btn btn-success">Yes. Order my pizza<span id="multiplePizzas" class="hidden">s</span></button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- /#modalReviewOrder -->
 
   </body>
 </html>
