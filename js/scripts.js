@@ -11,7 +11,7 @@ Order.prototype.addPizza = function (pizza){
   this.currentPizzaId ++;
   pizza.pizzaId = this.currentPizzaId;
   this.pizzas.push(pizza);
-};
+}
 
 //getOrderTotal() sets the orderTotal to the total price of all pizzas in order
 Order.prototype.getOrderTotal = function() {
@@ -21,7 +21,7 @@ Order.prototype.getOrderTotal = function() {
     total += pizza.pizzaTotal;
   });
   this.orderTotal = total;
-};
+}
 
 //Pizza Constructor and Methods -------------------------------//
 function Pizza(){
@@ -118,7 +118,7 @@ Pizza.prototype.previewPizza = function (db) {
     toppingsText += db.li + topping + db.cli;
   })
   $("#modalDisplay").append(size, toppingsCount, db.ul+toppingsText+db.cul, total);
-};
+}
 
 //previewOrder displays user's complete order before confirmation
 Order.prototype.previewOrder = function () {
@@ -134,7 +134,7 @@ Order.prototype.previewOrder = function () {
     $("#modalDisplay").append("---------------------");
   })
   $("#modalDisplay").append(grandTotal);
-};
+}
 
 //buildToppingsList() creates the html tags and content for the modifier arrays
 Modifiers.prototype.buildToppingsList = function () {
@@ -149,7 +149,7 @@ Modifiers.prototype.buildToppingsList = function () {
       $("form div").append(modHtml);
     })
   })
-};
+}
 
 var goodBye = "Enjoyo Your Pizzaro!"
 
@@ -162,10 +162,11 @@ function clearForm() {
 // click events -------------------------------------//
 function attachEventListeners() {
   var userPizza;
+  var isUniquePizza = false;
   //previewPizza inserts data into new pizza object -- TODO: trigger preview window
   $("#previewPizza").on("click", function(event){
     var pizza = new Pizza();
-
+    isUniquePizza = true;
     pizza.size = $("input[name='pizzaSize']:checked").val();
     $.each($("input[type=checkbox]:checked"), function() {
       pizza.toppings.push($(this).val());
@@ -174,27 +175,45 @@ function attachEventListeners() {
     userPizza = pizza;
     $("#modalDisplay").empty();
     pizza.previewPizza(db);
+    console.log(order);
   });
 
   //addPizza pushes new pizza object into the orderObject.
   $("#addPizza").on("click", function(event){
-    order.addPizza(userPizza);
+    if (isUniquePizza){
+      order.addPizza(userPizza);
+    };
+    isUniquePizza = false;
     $("#modalPreviewPizza").on("hidden.bs.modal",function(e){
       $("#addS").removeClass('hidden');
     })
     clearForm();
     $("#previewOrder").removeClass('hidden');
     $("#confirmOrder").addClass('hidden');
+    console.log(order);
+
   })
 
   //previewOrder shows user entire order before submitting
   $("#previewOrder").on("click", function(event){
     $("#modalDisplay").empty();
-    order.addPizza(userPizza);
+    if (isUniquePizza){
+      order.addPizza(userPizza);
+    };
+    isUniquePizza = false;
     order.getOrderTotal();
     order.previewOrder();
+    $("h5 span").toggleClass('hidden');
+    $("#goBack").addClass('hidden');
+    $("#modalPreviewPizza").on("hidden.bs.modal",function(e){
+      $("#pizzaSpan").removeClass('hidden');
+      $("#orderSpan").addClass('hidden');
+      $("#goBack").removeClass('hidden');
+    })
     $("#previewOrder").addClass('hidden');
     $("#confirmOrder").removeClass('hidden');
+
+    console.log(order);
   })
 
   //goBack button returns user to order form without adding pizza to order
@@ -207,10 +226,9 @@ function attachEventListeners() {
   //confirmOrder will eomplete order process. For test purposes, it will refresh the page.
   $("#confirmOrder").on("click", function(){
     window.location.reload();
-    console.log("confirmOrder clicked");
   })
 
-}
+}//end attachEventListeners()
 
 // document.ready  ----------------------------------------//
 $(document).ready(function(){
